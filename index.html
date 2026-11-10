@@ -1,0 +1,311 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>thisisisaac Portfolio</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@600;700&family=Manrope:wght@400;500;600&display=swap">
+<style>
+/* Layout: a quiet dark reading room — a page rail on the left for skimming, slides stacked in one column on the right, a slim sticky bar that jumps between the three projects. Single dark look on purpose: the deck itself is dark. */
+:root {
+  --bg: #09090b;
+  --surface: #141418;
+  --line: #26262d;
+  --fg: #ececef;
+  --muted: #8d8d98;
+  --p1: #ff3d74;   /* Live Website 4.0 */
+  --p2: #3b74ff;   /* Sports Livestream */
+  --p3: #f4c25a;   /* Live Premiere */
+  --display: "Archivo Narrow", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  --body: "Manrope", "Helvetica Neue", Arial, system-ui, sans-serif;
+  --barH: 57px;
+  --railW: 232px;
+  color-scheme: dark;
+}
+body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 15px; line-height: 1.5; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+
+/* top bar */
+.bar {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 6;
+  background: color-mix(in srgb, var(--bg) 90%, transparent);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line);
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.bar-in { display: flex; align-items: center; gap: 16px; min-height: 56px; }
+.mark { font-family: var(--display); font-weight: 700; font-size: 22px; letter-spacing: .01em; text-transform: uppercase; color: var(--fg); text-decoration: none; white-space: nowrap; }
+.nav { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; flex: 1; min-width: 0; }
+.nav::-webkit-scrollbar { display: none; }
+.chip {
+  --c: var(--muted);
+  display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; flex: none;
+  padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line);
+  color: var(--muted); background: transparent; font: 500 13px/1.3 var(--body); cursor: pointer;
+  transition: color .2s, border-color .2s, background .2s;
+}
+.chip i { width: 7px; height: 7px; border-radius: 50%; background: var(--c); flex: none; }
+.chip:hover, .chip.on { color: var(--fg); border-color: var(--c); }
+.chip.on { background: color-mix(in srgb, var(--c) 14%, transparent); }
+.count { font-variant-numeric: tabular-nums; color: var(--muted); font-size: 13px; white-space: nowrap; }
+.count b { color: var(--fg); font-weight: 600; }
+.railBtn { display: none; }
+:focus-visible { outline: 2px solid var(--fg); outline-offset: 2px; }
+
+/* shell */
+.shell { display: grid; grid-template-columns: var(--railW) minmax(0, 1fr); }
+
+/* left page rail */
+.rail {
+  position: sticky; top: calc(env(safe-area-inset-top, 0px) + var(--barH));
+  height: calc(100dvh - var(--barH) - env(safe-area-inset-top, 0px));
+  overflow-y: auto; overscroll-behavior: contain;
+  border-right: 1px solid var(--line);
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: 14px; padding-block: 18px 32px;
+  scrollbar-width: thin; scrollbar-color: var(--line) transparent;
+}
+.rail h3 {
+  margin: 18px 0 8px; font-family: var(--display); font-weight: 700; font-size: 12px;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--c, var(--muted));
+  display: flex; justify-content: space-between; gap: 8px;
+}
+.rail h3:first-child { margin-top: 0; }
+.rail h3 span { color: var(--muted); font-family: var(--body); font-weight: 500; letter-spacing: 0; text-transform: none; font-variant-numeric: tabular-nums; }
+.thumbs { display: grid; gap: 8px; }
+.thumb {
+  display: grid; grid-template-columns: 22px minmax(0, 1fr); align-items: start; gap: 6px;
+  padding: 0; border: 0; background: none; cursor: pointer; text-align: left; color: var(--muted);
+  font: 500 11px/1 var(--body); font-variant-numeric: tabular-nums;
+}
+.thumb span { padding-top: 3px; text-align: right; }
+.thumb img { display: block; width: 100%; aspect-ratio: 16 / 9; height: auto; border-radius: 3px; box-shadow: 0 0 0 1px var(--line); opacity: .62; transition: opacity .15s, box-shadow .15s; }
+.thumb:hover img { opacity: .9; }
+.thumb.on { color: var(--fg); }
+.thumb.on img { opacity: 1; box-shadow: 0 0 0 2px var(--c, var(--fg)); }
+.thumb:focus { outline: none; }
+.thumb:focus-visible img { box-shadow: 0 0 0 2px var(--c, var(--fg)), 0 0 0 4px var(--fg); }
+.rail-hint { margin: 22px 0 0; color: var(--muted); font-size: 11px; line-height: 1.5; }
+
+/* slides */
+main {
+  padding-left: clamp(16px, 3vw, 40px);
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 28px 64px;
+  display: flex; flex-direction: column; gap: 56px; min-width: 0;
+}
+.col { max-width: 1360px; width: 100%; margin: 0 auto; display: flex; flex-direction: column; gap: 56px; }
+section { display: flex; flex-direction: column; gap: 18px; }
+.sec-head { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; padding-top: 8px; }
+.sec-head .tag { font-family: var(--display); font-weight: 700; font-size: 15px; letter-spacing: .08em; text-transform: uppercase; color: var(--c, var(--muted)); }
+.sec-head h2 { margin: 0; font-family: var(--display); font-weight: 600; font-size: clamp(22px, 3vw, 30px); text-wrap: balance; }
+.sec-head .pages { color: var(--muted); font-size: 13px; font-variant-numeric: tabular-nums; }
+figure.slide { margin: 0; }
+.frame { position: relative; aspect-ratio: 16 / 9; max-width: 100%; border-radius: 6px; overflow: hidden; background: var(--surface); box-shadow: 0 0 0 1px var(--line); }
+.frame img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.qr { position: absolute; border-radius: 4px; }
+.qr:hover { box-shadow: 0 0 0 3px var(--c, var(--fg)); }
+.below { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; margin-top: 12px; }
+.btn {
+  display: inline-flex; align-items: center; gap: 8px; padding: 9px 16px; border-radius: 999px;
+  background: var(--c, var(--fg)); color: var(--bg); font: 600 14px/1.2 var(--body); text-decoration: none; border: 0; cursor: pointer;
+}
+.btn.ghost { background: transparent; color: var(--fg); box-shadow: inset 0 0 0 1px var(--line); }
+.note { color: var(--muted); font-size: 13px; }
+.email { user-select: all; color: var(--fg); font-size: 15px; }
+footer { color: var(--muted); font-size: 13px; border-top: 1px solid var(--line); padding-top: 20px; }
+
+/* narrow screens: rail becomes a drawer */
+@media (max-width: 960px) {
+  .shell { grid-template-columns: minmax(0, 1fr); }
+  .railBtn { display: inline-flex; }
+  .rail {
+    position: fixed; z-index: 8; left: 0; top: calc(env(safe-area-inset-top, 0px) + var(--barH));
+    width: min(280px, 82vw); height: calc(100dvh - var(--barH) - env(safe-area-inset-top, 0px));
+    background: var(--bg); transform: translateX(-102%); transition: transform .25s ease;
+    padding-bottom: calc(32px + env(safe-area-inset-bottom, 0px));
+  }
+  .rail.open { transform: none; box-shadow: 24px 0 48px rgb(0 0 0 / .5); }
+  .scrim { position: fixed; inset: 0; z-index: 7; background: rgb(0 0 0 / .45); }
+  main { padding-left: max(16px, env(safe-area-inset-left, 0px)); }
+}
+@media (max-width: 640px) {
+  .count { display: none; }
+  .bar-in { gap: 10px; }
+  .mark { font-size: 19px; }
+  main, .col { gap: 40px; }
+  .frame { border-radius: 4px; }
+}
+@media (prefers-reduced-motion: reduce) { .rail { transition: none; } }
+</style>
+
+<header class="bar" id="bar">
+  <div class="bar-in">
+    <button class="chip railBtn" id="railBtn" type="button" aria-controls="rail" aria-expanded="false">Pages</button>
+    <span class="mark">thisisisaac</span>
+    <nav class="nav" id="nav" aria-label="Sections"></nav>
+    <span class="count" aria-live="polite"><b id="cur">1</b> / <span id="tot">53</span></span>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="rail" id="rail" aria-label="All pages"></aside>
+  <main><div class="col" id="col"></div></main>
+</div>
+<div class="scrim" id="scrim" hidden></div>
+
+<script>
+const SECTIONS = [
+  { id: "intro",   tag: "Intro",   title: "About & background", from: 1,  to: 7,  c: "var(--muted)" },
+  { id: "p1",      tag: "P1",      title: "Live Website 4.0",   from: 8,  to: 21, c: "var(--p1)" },
+  { id: "p2",      tag: "P2",      title: "Sports Livestream",  from: 22, to: 37, c: "var(--p2)" },
+  { id: "p3",      tag: "P3",      title: "Live Premiere",      from: 38, to: 51, c: "var(--p3)" },
+  { id: "closing", tag: "Closing", title: "In closing",         from: 52, to: 53, c: "var(--muted)" }
+];
+const LINKS = {
+  29: { url: "https://youtu.be/hP67V2bL38w", label: "Watch the P2 demo", box: [43.9, 33.3, 12.3, 21.9] },
+  46: { url: "https://youtu.be/_esJfv4Aehw", label: "Watch the P3 demo", box: [10.4, 41.8, 8.3, 14.8] }
+};
+const EMAIL = "isaac.ni0813@gmail.com";
+const TOTAL = 53;
+const pad = n => String(n).padStart(2, "0");
+const $ = id => document.getElementById(id);
+/* pages that have been replaced get a new file name, so browsers don't show a cached old version */
+const REV = { 2: "-v3", 53: "-v2" };
+const img = n => pad(n) + (REV[n] || "") + ".webp";
+const nav = $("nav"), col = $("col"), rail = $("rail");
+
+/* build */
+SECTIONS.forEach(s => {
+  const chip = document.createElement("button");
+  chip.type = "button"; chip.className = "chip"; chip.dataset.sec = s.id; chip.dataset.go = s.from;
+  chip.style.setProperty("--c", s.c);
+  chip.innerHTML = `<i></i>${s.tag === "Intro" || s.tag === "Closing" ? s.tag : s.tag + " · " + s.title}`;
+  nav.appendChild(chip);
+
+  const h = document.createElement("h3");
+  h.style.setProperty("--c", s.c);
+  h.innerHTML = `${s.tag === "Intro" || s.tag === "Closing" ? s.tag : s.tag + " " + s.title}<span>${s.from}–${s.to}</span>`;
+  const grid = document.createElement("div"); grid.className = "thumbs"; grid.style.setProperty("--c", s.c);
+  rail.append(h, grid);
+
+  const sec = document.createElement("section");
+  sec.id = s.id; sec.style.setProperty("--c", s.c);
+  sec.innerHTML = `<div class="sec-head"><span class="tag">${s.tag}</span><h2>${s.title}</h2><span class="pages">p.${s.from}–${s.to}</span></div>`;
+  for (let n = s.from; n <= s.to; n++) {
+    const t = document.createElement("button");
+    t.type = "button"; t.className = "thumb"; t.dataset.go = n; t.id = "t" + n;
+    t.setAttribute("aria-label", "Go to page " + n);
+    t.innerHTML = `<span>${n}</span><img src="t/${img(n)}" width="400" height="225" alt="" loading="lazy" decoding="async">`;
+    grid.appendChild(t);
+
+    const f = document.createElement("figure");
+    f.className = "slide"; f.id = "page" + n; f.dataset.n = n; f.dataset.sec = s.id;
+    let inner = `<div class="frame"><img src="p/${img(n)}" width="2560" height="1440" alt="Portfolio page ${n}" ${n <= 3 ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async">`;
+    const L = LINKS[n];
+    if (L) { const [x, y, w, hh] = L.box; inner += `<a class="qr" href="${L.url}" target="_blank" rel="noopener" aria-label="${L.label}" style="left:${x}%;top:${y}%;width:${w}%;height:${hh}%"></a>`; }
+    inner += `</div>`;
+    if (L) inner += `<div class="below"><a class="btn" href="${L.url}" target="_blank" rel="noopener">${L.label} ↗</a><span class="note">Opens on YouTube</span></div>`;
+    if (n === TOTAL) inner += `<div class="below"><span class="email" id="email">${EMAIL}</span><button class="btn ghost" id="copy" type="button">Copy email</button></div>`;
+    f.innerHTML = inner;
+    sec.appendChild(f);
+  }
+  col.appendChild(sec);
+});
+rail.querySelectorAll(".thumb").forEach(t => t.tabIndex = -1);
+rail.insertAdjacentHTML("beforeend", `<p class="rail-hint">Click a page, then use ↑ ↓ to flip through.</p>`);
+col.insertAdjacentHTML("beforeend", `<footer>Isaac Ni · UI/UX Portfolio 2026 · Use ← → or J / K to move between pages.</footer>`);
+
+/* jumping: computed in script, instant, so nothing can interrupt it */
+const slides = [...document.querySelectorAll(".slide")];
+const barH = () => $("bar").getBoundingClientRect().height;
+let lockUntil = 0;
+function go(n, keepRail) {
+  n = Math.min(Math.max(n, 1), TOTAL);
+  railTouched = 0;
+  const el = $("page" + n);
+  const target = el.getBoundingClientRect().top + scrollY - barH() - 16;
+  lockUntil = performance.now() + 400;
+  window.scrollTo({ top: Math.max(0, target), behavior: "instant" });
+  setCurrent(n);
+  if (!keepRail) closeRail();
+}
+document.addEventListener("click", e => {
+  const b = e.target.closest("[data-go]");
+  if (!b) return;
+  e.preventDefault();
+  const inRail = b.classList.contains("thumb");
+  go(+b.dataset.go, inRail && rail.classList.contains("open") ? false : inRail);
+  if (inRail) b.focus({ preventScroll: true });
+});
+
+/* current page tracking */
+let current = 0;
+function setCurrent(n) {
+  if (n === current) return;
+  current = n; $("cur").textContent = n;
+  const sec = $("page" + n).dataset.sec;
+  nav.querySelectorAll(".chip[data-sec]").forEach(c => c.classList.toggle("on", c.dataset.sec === sec));
+  const chip = nav.querySelector(`.chip[data-sec="${sec}"]`);
+  if (chip) { /* scroll only the chip strip, never the page */
+    const l = chip.offsetLeft - nav.offsetLeft, r = l + chip.offsetWidth;
+    if (l < nav.scrollLeft || r > nav.scrollLeft + nav.clientWidth) nav.scrollLeft = l - 8;
+  }
+  rail.querySelectorAll(".thumb.on").forEach(t => { t.classList.remove("on"); t.tabIndex = -1; t.removeAttribute("aria-current"); });
+  const t = $("t" + n); t.classList.add("on"); t.tabIndex = 0; t.setAttribute("aria-current", "page");
+  centerThumb(t);
+}
+/* keep the active thumbnail centred in the rail; scrolls only the rail, never the page */
+let railTouched = 0;
+["wheel", "touchmove"].forEach(ev => rail.addEventListener(ev, () => railTouched = performance.now(), { passive: true }));
+const calm = matchMedia("(prefers-reduced-motion: reduce)");
+function centerThumb(t, force) {
+  if (!force && performance.now() - railTouched < 1200) return;
+  const top = t.getBoundingClientRect().top - rail.getBoundingClientRect().top + rail.scrollTop;
+  rail.scrollTo({ top: top - (rail.clientHeight - t.offsetHeight) / 2, behavior: calm.matches ? "auto" : "smooth" });
+}
+function track() {
+  if (performance.now() < lockUntil) return;
+  const line = barH() + innerHeight * 0.3;
+  let best = slides[0];
+  for (const s of slides) { if (s.getBoundingClientRect().top <= line) best = s; else break; }
+  setCurrent(+best.dataset.n);
+}
+let raf = 0;
+addEventListener("scroll", () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(track); }, { passive: true });
+addEventListener("resize", track);
+track();
+
+/* keyboard */
+/* in the rail: ↑ ↓ (and Home / End) move between pages, focus follows */
+rail.addEventListener("keydown", e => {
+  const map = { ArrowDown: current + 1, ArrowUp: current - 1, Home: 1, End: TOTAL };
+  if (!(e.key in map)) return;
+  e.preventDefault(); e.stopPropagation();
+  const n = Math.min(Math.max(map[e.key], 1), TOTAL);
+  go(n, true);
+  const t = $("t" + n); t.focus({ preventScroll: true }); centerThumb(t, true);
+});
+addEventListener("keydown", e => {
+  if (e.metaKey || e.ctrlKey || e.altKey || /input|textarea|select/i.test(e.target.tagName)) return;
+  if (e.key === "ArrowRight" || e.key === "j" || e.key === "J") { e.preventDefault(); go(current + 1); }
+  if (e.key === "ArrowLeft" || e.key === "k" || e.key === "K") { e.preventDefault(); go(current - 1); }
+  if (e.key === "Escape") closeRail();
+});
+
+/* drawer on narrow screens */
+const railBtn = $("railBtn"), scrim = $("scrim");
+function openRail() { rail.classList.add("open"); scrim.hidden = false; railBtn.setAttribute("aria-expanded", "true"); }
+function closeRail() { rail.classList.remove("open"); scrim.hidden = true; railBtn.setAttribute("aria-expanded", "false"); }
+railBtn.addEventListener("click", () => rail.classList.contains("open") ? closeRail() : openRail());
+scrim.addEventListener("click", closeRail);
+
+/* copy email */
+const copyBtn = $("copy");
+copyBtn.addEventListener("click", () => {
+  const done = () => { copyBtn.textContent = "Copied"; setTimeout(() => copyBtn.textContent = "Copy email", 1600); };
+  const fallback = () => { const r = document.createRange(); r.selectNodeContents($("email")); const s = getSelection(); s.removeAllRanges(); s.addRange(r); copyBtn.textContent = "Selected, press ⌘C"; };
+  try { navigator.clipboard.writeText(EMAIL).then(done, fallback); } catch (e) { fallback(); }
+});
+</script>
+
+</body></html>
